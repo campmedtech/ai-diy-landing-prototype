@@ -1,7 +1,14 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const disclosureTimers = new WeakMap();
 
 function setDisclosureState(trigger, panel, willOpen) {
   trigger.setAttribute("aria-expanded", String(willOpen));
+
+  const pendingTimer = disclosureTimers.get(panel);
+  if (pendingTimer) {
+    window.clearTimeout(pendingTimer);
+    disclosureTimers.delete(panel);
+  }
 
   if (reduceMotion.matches) {
     panel.hidden = !willOpen;
@@ -18,12 +25,15 @@ function setDisclosureState(trigger, panel, willOpen) {
     panel.style.height = `${panel.scrollHeight}px`;
     panel.style.opacity = "1";
 
-    const finishOpen = (event) => {
-      if (event.propertyName !== "height") return;
-      panel.style.height = "auto";
-      panel.removeEventListener("transitionend", finishOpen);
-    };
-    panel.addEventListener("transitionend", finishOpen);
+    disclosureTimers.set(
+      panel,
+      window.setTimeout(() => {
+        if (trigger.getAttribute("aria-expanded") === "true") {
+          panel.style.height = "auto";
+        }
+        disclosureTimers.delete(panel);
+      }, 280),
+    );
     return;
   }
 
@@ -32,12 +42,16 @@ function setDisclosureState(trigger, panel, willOpen) {
   panel.style.height = "0px";
   panel.style.opacity = "0";
 
-  const finishClose = (event) => {
-    if (event.propertyName !== "height") return;
-    panel.hidden = true;
-    panel.removeEventListener("transitionend", finishClose);
-  };
-  panel.addEventListener("transitionend", finishClose);
+  disclosureTimers.set(
+    panel,
+    window.setTimeout(() => {
+      if (trigger.getAttribute("aria-expanded") === "false") {
+        panel.hidden = true;
+        panel.style.height = "0px";
+      }
+      disclosureTimers.delete(panel);
+    }, 280),
+  );
 }
 
 document.querySelectorAll("[data-disclosure], .contact-trigger").forEach((trigger) => {
