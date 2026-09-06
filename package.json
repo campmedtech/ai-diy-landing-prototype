@@ -1,0 +1,13 @@
+{
+  "name": "ai-diy-landing-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "AI-DIY Solutions LLC - Guided AI Delivery Lab",
+  "type": "module",
+  "packageManager": "pnpm@11.19.0",
+  "scripts": {
+    "build": "node build.mjs",
+    "dev": "node serve.mjs",
+    "start": "node serve.mjs"
+  }
+}

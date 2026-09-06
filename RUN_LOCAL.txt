@@ -1,0 +1,14 @@
+Requirements
+Node.js 18 or newer
+pnpm 11 or newer
+
+Install, build, and run
+pnpm install
+pnpm run build
+pnpm start
+
+Open
+http://localhost:8000/
+
+Stop
+Press Ctrl+C in the terminal.
