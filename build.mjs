@@ -1,4 +1,4 @@
-import { copyFile, mkdir, rm, writeFile } from "node:fs/promises";
+import { cp, copyFile, mkdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -12,6 +12,8 @@ await mkdir(outputDirectory, { recursive: true });
 for (const sourceFile of sourceFiles) {
   await copyFile(join(projectRoot, sourceFile), join(outputDirectory, sourceFile));
 }
+
+await cp(join(projectRoot, "assets"), join(outputDirectory, "assets"), { recursive: true });
 
 await writeFile(join(outputDirectory, ".nojekyll"), "", "utf8");
 
