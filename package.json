@@ -1,5 +1,5 @@
 {
-  "name": "ai-diy-landing-prototype",
+  "name": "ai-diy-sales-redesign-prototype",
   "version": "1.0.0",
   "private": true,
   "description": "AI-DIY Solutions LLC - Guided AI Delivery Lab",
@@ -7,6 +7,7 @@
   "packageManager": "pnpm@11.19.0",
   "scripts": {
     "build": "node build.mjs",
+    "validate": "node validate.mjs",
     "dev": "node serve.mjs",
     "start": "node serve.mjs"
   }

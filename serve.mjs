@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const projectRoot = dirname(fileURLToPath(import.meta.url));
 const builtRoot = resolve(projectRoot, "docs");
 const siteRoot = existsSync(builtRoot) ? builtRoot : projectRoot;
-const port = Number.parseInt(process.env.PORT || "8000", 10);
+const port = Number.parseInt(process.env.PORT || "8001", 10);
 
 const contentTypes = new Map([
   [".html", "text/html; charset=utf-8"],
