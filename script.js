@@ -1,6 +1,6 @@
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
-document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
+document.querySelectorAll(".accordion-trigger, .contact-trigger").forEach((trigger) => {
   const panel = document.getElementById(trigger.getAttribute("aria-controls"));
 
   trigger.addEventListener("click", () => {
@@ -47,9 +47,26 @@ document.querySelectorAll(".accordion-trigger").forEach((trigger) => {
 
 document.querySelectorAll("[data-scroll-target]").forEach((button) => {
   button.addEventListener("click", () => {
-    document.querySelector(button.dataset.scrollTarget)?.scrollIntoView({
-      behavior: reduceMotion.matches ? "auto" : "smooth",
-      block: "start",
-    });
+    const disclosure = button.dataset.openTarget
+      ? document.querySelector(button.dataset.openTarget)
+      : null;
+    const disclosureTrigger = disclosure?.querySelector(".accordion-trigger");
+
+    if (disclosureTrigger?.getAttribute("aria-expanded") === "false") {
+      disclosureTrigger.click();
+    }
+
+    const scrollToTarget = () => {
+      document.querySelector(button.dataset.scrollTarget)?.scrollIntoView({
+        behavior: reduceMotion.matches ? "auto" : "smooth",
+        block: "start",
+      });
+    };
+
+    if (disclosureTrigger && !reduceMotion.matches) {
+      window.setTimeout(scrollToTarget, 280);
+    } else {
+      scrollToTarget();
+    }
   });
 });

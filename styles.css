@@ -2,8 +2,8 @@
   --navy: #2d3e50;
   --ink: #2d3e50;
   --muted: #536273;
-  --blue: #667eea;
-  --blue-hover: #526bd7;
+  --blue: #526bd7;
+  --blue-hover: #4057c3;
   --link: #0873b9;
   --panel: #f6f9ff;
   --panel-light: #f8fbff;
@@ -276,16 +276,28 @@ h3 {
   margin: 0 0 25px;
 }
 
-.hero-actions .button {
-  min-width: 179px;
+.hero-button-row {
+  display: grid;
+  grid-template-columns: minmax(190px, 1fr) minmax(230px, 1.2fr) minmax(210px, 1fr);
+  align-items: center;
 }
 
-.hero-actions .button:nth-child(2) {
-  min-width: 198px;
+.hero-actions .hero-button-secondary {
+  min-height: 49px;
+  border: 2px solid #91a2ee;
+  background: #506583;
 }
 
-.hero-actions .button:nth-child(3) {
-  min-width: 204px;
+.hero-actions .hero-button-secondary:hover {
+  background: #435873;
+}
+
+.hero-actions .hero-button-primary {
+  min-height: 58px;
+  padding-inline: 36px;
+  background: var(--blue);
+  font-size: 16px;
+  box-shadow: 0 8px 18px rgba(9, 18, 45, 0.3);
 }
 
 .hero-note {
@@ -297,6 +309,72 @@ h3 {
 .hero-note a {
   color: var(--white);
   font-weight: 700;
+}
+
+.contact-disclosure {
+  width: min(100%, 520px);
+  margin-top: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  border-radius: 9px;
+  overflow: hidden;
+}
+
+.contact-trigger {
+  position: relative;
+  display: flex;
+  width: 100%;
+  min-height: 45px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  border: 0;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--white);
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 180ms ease;
+}
+
+.contact-trigger:hover,
+.contact-trigger[aria-expanded="true"] {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.contact-indicator {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  border: 2px solid var(--white);
+  border-radius: 50%;
+}
+
+.contact-indicator::before,
+.contact-indicator::after {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 8px;
+  height: 2px;
+  content: "";
+  transform: translate(-50%, -50%);
+  background: var(--white);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.contact-indicator::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+}
+
+.contact-trigger[aria-expanded="true"] .contact-indicator::after {
+  opacity: 0;
+  transform: translate(-50%, -50%) rotate(0deg);
+}
+
+.contact-panel-inner {
+  padding: 14px 16px 1px;
+  background: rgba(0, 0, 0, 0.12);
 }
 
 .learn-panel {
@@ -523,6 +601,50 @@ blockquote cite {
 
 .audience-grid p {
   margin-bottom: 0;
+}
+
+.authority-section {
+  margin-bottom: 48px;
+  padding: 24px 28px;
+}
+
+.authority-section p {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+.progressive-section {
+  margin-top: 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+
+#see-it-first {
+  margin-top: 50px;
+}
+
+.progressive-section .accordion-trigger {
+  min-height: 166px;
+  padding-block: 38px;
+}
+
+.progressive-section .accordion-panel-inner {
+  padding: 0 28px 42px;
+}
+
+#what-you-leave-with .accordion-panel-inner {
+  padding-top: 0;
+}
+
+#what-you-leave-with .accordion-heading .eyebrow {
+  text-align: center;
+}
+
+.testimonials .quote-grid {
+  margin-top: 12px;
 }
 
 .accordion-section {
@@ -831,7 +953,7 @@ blockquote cite {
 
 .purchase-section {
   display: grid;
-  min-height: 282px;
+  min-height: 350px;
   grid-template-columns: minmax(0, 1fr) 341px;
   gap: 52px;
   align-items: center;
@@ -859,6 +981,36 @@ blockquote cite {
   background: var(--white);
   color: var(--ink);
   text-align: center;
+}
+
+.purchase-price-card {
+  min-height: 120px;
+  align-content: center;
+}
+
+.purchase-button-row {
+  display: grid;
+  grid-column: 1 / -1;
+  grid-template-columns: minmax(190px, 1fr) minmax(230px, 1.2fr) minmax(210px, 1fr);
+  gap: 21px;
+  margin: -8px 0 0;
+}
+
+.purchase-button-secondary {
+  min-height: 49px;
+  border: 2px solid #91a2ee;
+  background: #506583;
+}
+
+.purchase-button-secondary:hover {
+  background: #435873;
+}
+
+.purchase-button-primary {
+  min-height: 58px;
+  padding-inline: 36px;
+  font-size: 16px;
+  box-shadow: 0 8px 18px rgba(9, 18, 45, 0.3);
 }
 
 .price-card > span {
@@ -920,6 +1072,14 @@ blockquote cite {
   .hero-grid,
   .purchase-section {
     grid-template-columns: 1fr;
+  }
+
+  .hero-button-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .purchase-button-row {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .three-up,
@@ -1023,6 +1183,15 @@ blockquote cite {
     flex-direction: column;
   }
 
+  .hero-button-row {
+    display: flex;
+  }
+
+  .purchase-button-row {
+    display: flex;
+    margin-top: 0;
+  }
+
   .hero-copy .button,
   .hero-actions .button,
   .button-row .button,
@@ -1063,6 +1232,27 @@ blockquote cite {
 
   .section-heading-left {
     margin-bottom: 44px;
+  }
+
+  .authority-section {
+    margin-bottom: 36px;
+    padding: 20px;
+  }
+
+  .authority-section p {
+    font-size: 16px;
+  }
+
+  #see-it-first {
+    margin-top: 36px;
+  }
+
+  .progressive-section .accordion-trigger {
+    min-height: 140px;
+  }
+
+  .progressive-section .accordion-panel-inner {
+    padding: 0 12px 30px;
   }
 
   .accordion-trigger,
